@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  RestApiUrl:'https://data.gov'
+  RestApiUrl: 'https://data.baltimorecity.gov/api/views/k5ry-ef3g/rows.json'
 };
 
 /*

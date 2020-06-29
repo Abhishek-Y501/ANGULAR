@@ -14,12 +14,18 @@ export class AppService {
   constructor(private httpClient: HttpClient) { }
 
   getData(): Observable<any> {
-    return this.httpClient.get<any>('https://data.ct.gov/api/views/6hvp-8msr/rows.json').pipe(
+    return this.httpClient.get<any>(this.rootUrl).pipe(
       catchError(this.handleError),
       tap((response: any) => {
-        return response;
+        return this.handleSuccess(response.data);
       })
     )
+  }
+
+  private handleSuccess(data) {
+    return data.map((data, index) => {
+      data.join(',').split(',');
+    })
   }
 
   private handleError(error: HttpErrorResponse): Observable<any> {

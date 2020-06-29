@@ -1,89 +1,72 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-headings text-success text-center">2013 Small Cities Applicants</div>
+        <div class="card shadow-lg p-3 mb-2 bg-white rounded">
+            <div class="card-headings text-success text-center">
+                <b>RESTAURANTS</b> 
+            </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered">
                         <thead>
                             <tr>
+                                <th>SId</th>
                                 <th>Id</th>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Description</th>
-                                <th>DownloadCount</th>
-                                <th>Approvals</th>
-                                <th>Owner</th>
-                                <th>Tags</th>
-                                <th>Provenance</th>
-                                <th>ViewCount</th>
+                                <th>Position</th>
+                                <th>CreatedAt</th>
                                 <th>UpdatedAt</th>
-                                <th>UpdatedBy</th>
-                                <th>ViewType</th>
+                                <th>Meta</th>
+                                <th>Name</th>
+                                <th>ZipCode</th>
+                                <th>Neighborhood</th>
+                                <th>CouncilDistrict</th>
+                                <th>PoliceDistrict</th>
+                                <th>Location 1</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr *ngIf="isloaded">
-                                <td>{{citiesData.id}}</td>
-                                <td>{{citiesData.name}}</td>
-                                <td>{{citiesData.category}}</td>
-                                <td>{{citiesData.description}}</td>
-                                <td>{{citiesData.downloadCount}}</td>
-                                <td>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th class="text-primary">State</th>
-                                                <th class="text-primary">Submitter</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    {{citiesData.approvals[0].state}}
-                                                </td>
-                                                <td>{{citiesData.approvals[0].submitter.displayName}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                                <td>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Id</th>
-                                                <th>DisplayName</th>
-                                                <th>screenName</th>
-                                                <th>type</th>
-                                                <th>userSegment</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>{{citiesData.owner.id}}</td>
-                                                <td>{{citiesData.owner.displayName}}</td>
-                                                <td>{{citiesData.owner.screenName}}</td>
-                                                <td>{{citiesData.owner.type}}</td>
-                                                <td>{{citiesData.owner.userSegment}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                                <td>
-                                    <span *ngFor="let tag of citiesData.tags;let i=index">
-                                        {{i}}-{{tag}} <br>
-                                    </span>
-                                </td>
-                                <td>{{citiesData.provenance}}</td>
-                                <td>{{citiesData.viewCount}}</td>
-                                <td>{{citiesData.rowsUpdatedAt}}</td>
-                                <td>{{citiesData.rowsUpdatedBy}}</td>
-                                <td>{{citiesData.viewType}}</td>
+                        <tbody *ngIf="isloaded">
+                            <tr *ngFor="let restaurant of restaurants| paginate: { itemsPerPage: 4, currentPage: p }">
+                                <td>{{restaurant[0]}}</td>
+                                <td>{{restaurant[1]}}</td>
+                                <td>{{restaurant[2]}}</td>
+                                <td>{{restaurant[3]}}</td>
+                                <td>{{restaurant[5]}}</td>
+                                <td>{{restaurant[7]}}</td>
+                                <td>{{restaurant[8]}}</td>
+                                <td>{{restaurant[9]}}</td>
+                                <td>{{restaurant[10]}}</td>
+                                <td>{{restaurant[11]}}</td>
+                                <td>{{restaurant[12]}}</td>
+                                <td><button type="button" class="btn btn-primary btn-sm"
+                                        (click)="openModel(restaurant[13],content)">Address</button></td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="text-center mt-2" *ngIf="isloaded">
+                    <pagination-controls (pageChange)="p = $event" *ngIf="restaurants.length>5"></pagination-controls>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h3 class="modal-title text-primary" id="modal-basic-title">Address</h3>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div *ngIf="isModelOpen">
+            <p> <b>Address:-</b> <span class="float-right">{{currentAddress.address}}</span></p>
+            <p> <b>City:- </b> <span class="float-right">{{this.currentAddress.city}}</span></p>
+            <p> <b>State:-</b> <span class="float-right">{{this.currentAddress.state}}</span></p>
+            <p> <b>Zip:- </b> <span class="float-right">{{this.currentAddress.zip || 0000}}</span></p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Save click')">Close</button>
+    </div>
+</ng-template>

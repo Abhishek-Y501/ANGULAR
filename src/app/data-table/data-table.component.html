@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-headings text-success text-center">2013 Small Cities Applicants</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>DownloadCount</th>
+                                <th>Approvals</th>
+                                <th>Owner</th>
+                                <th>Tags</th>
+                                <th>Provenance</th>
+                                <th>ViewCount</th>
+                                <th>UpdatedAt</th>
+                                <th>UpdatedBy</th>
+                                <th>ViewType</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="isloaded">
+                                <td>{{citiesData.id}}</td>
+                                <td>{{citiesData.name}}</td>
+                                <td>{{citiesData.category}}</td>
+                                <td>{{citiesData.description}}</td>
+                                <td>{{citiesData.downloadCount}}</td>
+                                <td>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="text-primary">State</th>
+                                                <th class="text-primary">Submitter</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    {{citiesData.approvals[0].state}}
+                                                </td>
+                                                <td>{{citiesData.approvals[0].submitter.displayName}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>DisplayName</th>
+                                                <th>screenName</th>
+                                                <th>type</th>
+                                                <th>userSegment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{citiesData.owner.id}}</td>
+                                                <td>{{citiesData.owner.displayName}}</td>
+                                                <td>{{citiesData.owner.screenName}}</td>
+                                                <td>{{citiesData.owner.type}}</td>
+                                                <td>{{citiesData.owner.userSegment}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>
+                                    <span *ngFor="let tag of citiesData.tags;let i=index">
+                                        {{i}}-{{tag}} <br>
+                                    </span>
+                                </td>
+                                <td>{{citiesData.provenance}}</td>
+                                <td>{{citiesData.viewCount}}</td>
+                                <td>{{citiesData.rowsUpdatedAt}}</td>
+                                <td>{{citiesData.rowsUpdatedBy}}</td>
+                                <td>{{citiesData.viewType}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
